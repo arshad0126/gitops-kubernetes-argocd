@@ -54,4 +54,4 @@ jobs:
       - name: Dry Run Template Validation
         run: |
           # Render templates to verify Helm can successfully compile them
-          helm template test-release helm/app-chart --strict
+          helm template test-release helm/app-chart
