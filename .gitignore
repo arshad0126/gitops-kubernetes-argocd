@@ -12,3 +12,6 @@ Thumbs.db
 # Kubernetes local/development ignore
 .kube/
 kubeconfig
+
+# Local bin directory (holds the portable Helm CLI)
+bin/
