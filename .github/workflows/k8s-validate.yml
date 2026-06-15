@@ -27,12 +27,12 @@ jobs:
       - name: Validate Dev Overlay Compilation & Schema
         run: |
           # Compile using built-in kubectl kustomize and pipe to kubeconform schema check
-          kubectl kustomize kustomize/overlays/dev | kubeconform -summary -strict -ignore-missing-resources
+          kubectl kustomize kustomize/overlays/dev | kubeconform -summary -strict -ignore-missing-schemas
 
       - name: Validate Prod Overlay Compilation & Schema
         run: |
           # Compile and validate production overlay
-          kubectl kustomize kustomize/overlays/prod | kubeconform -summary -strict -ignore-missing-resources
+          kubectl kustomize kustomize/overlays/prod | kubeconform -summary -strict -ignore-missing-schemas
 
   validate-helm:
     name: "Validate Helm Templates"
