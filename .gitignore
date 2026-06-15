@@ -1,0 +1,14 @@
+# Ignore Helm charts packaged as tgz files
+*.tgz
+
+# Ignore local secret files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Kubernetes local/development ignore
+.kube/
+kubeconfig

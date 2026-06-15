@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: react-web-app-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/arshad0126/gitops-kubernetes-argocd.git'
+    targetRevision: main
+    path: kustomize/overlays/prod
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: prod-app
+  
+  # Production Sync Policy: Requires manual synchronization (manual gate)
+  # or can be integrated with a pipeline that triggers sync via ArgoCD CLI / API.
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    # To enable auto-sync for production, uncomment the block below:
+    # automated:
+    #   prune: true
+    #   selfHeal: true

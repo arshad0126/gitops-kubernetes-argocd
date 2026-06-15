@@ -1,0 +1,36 @@
+# Default values for app-chart
+
+replicaCount: 2
+
+image:
+  repository: arshad0126/react-web-app
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: 250m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  NODE_ENV: "production"
+  REACT_APP_API_URL: "https://api.react-app.com"
+  LOG_LEVEL: "info"
+
+livenessProbe:
+  path: /
+  initialDelaySeconds: 15
+  periodSeconds: 20
+
+readinessProbe:
+  path: /
+  initialDelaySeconds: 5
+  periodSeconds: 10

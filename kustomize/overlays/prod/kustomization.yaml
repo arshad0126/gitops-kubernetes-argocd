@@ -1,0 +1,44 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+  - hpa.yaml
+
+namespace: prod-app
+
+# Kustomize ConfigMap generator with production values
+configMapGenerator:
+  - name: app-config
+    literals:
+      - NODE_ENV=production
+      - REACT_APP_API_URL=https://api.react-app.com
+      - LOG_LEVEL=warn
+
+# Baseline replica count for production
+replicas:
+  - name: react-web-app
+    count: 3
+
+# Inject rolling update strategy and resource limit overrides for Production stability
+patches:
+  - target:
+      kind: Deployment
+      name: react-web-app
+    patch: |-
+      - op: replace
+        path: /spec/strategy
+        value:
+          type: RollingUpdate
+          rollingUpdate:
+            maxSurge: 25%
+            maxUnavailable: 0
+      - op: replace
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
