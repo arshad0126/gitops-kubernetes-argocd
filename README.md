@@ -25,7 +25,7 @@ graph LR
     subgraph Kubernetes Cluster
         Argo[ArgoCD Controller] -->|1. Polling Git| Git
         Argo -->|2. Detects Out-of-Sync| Diff{State Diff?}
-        Diff -- Yes -->|3. Reconciliation| K8s[Apply Manifests]
+        Diff -->|Yes - Reconcile| K8s[Apply Manifests]
         
         subgraph Namespaces
             K8s -->|dev-app| DevApp[Replicas: 1]
